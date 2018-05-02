@@ -1,0 +1,17 @@
+{
+  "name": "games-list",
+  "version": "1.0.0",
+  "description": "A comprehensive list of games I've played and other statistics about them.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "mocha"
+  },
+  "author": "Brandon Leishman",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.0.15"
+  }
+}
