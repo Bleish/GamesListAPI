@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var Game = require('../models/game');
+import express from 'express';
+let router = express.Router();
+import Game from '../models/game';
 
 router.get('/', function(req, res){
     Game.find(function(err, games){
@@ -8,7 +8,7 @@ router.get('/', function(req, res){
         res.json(games);
     });
     // Alternate code
-    // var query = Game.find({});
+    // let query = Game.find({});
     // query.exec((err, games) => {
     //     if (err) res.send(err);
     //     res.json(games);
@@ -19,4 +19,4 @@ router.post('/', function(req, res){
    res.send('POST route on games.');
 });
 
-module.exports = router;
+export default router;
