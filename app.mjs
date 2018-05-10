@@ -39,3 +39,5 @@ app.use(routes); // ES6 method
 // app.use(require('./routes')); // CJS method
 
 app.listen(port);
+
+export default app;
