@@ -1,14 +1,12 @@
-require = require("@std/esm")(module,{"esm":"js"});
+// This allows mocha to require es6 modules
+require = require('esm')(module);
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../app.js');
-
-// import chai from 'chai';
-// import chaiHttp from 'chai-http';
-// import app from '../app.mjs';
+let app = require('../app.mjs');
 
 let should = chai.should();
+let server = app.server;
 
 chai.use(chaiHttp);
 
@@ -24,7 +22,7 @@ describe('Games', function() {
     });
     
     it('should GET all the games', function(done) {
-        chai.request(app)
+        chai.request(server)
             .get('/games')
             .end((err, res) => {
                 res.should.have.status(200);

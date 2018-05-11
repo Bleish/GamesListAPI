@@ -38,6 +38,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:')); // Bin
 app.use(routes); // ES6 method
 // app.use(require('./routes')); // CJS method
 
-app.listen(port);
+let server = app.listen(port);
 
-export default app;
+export { server }; // For mocha testing
