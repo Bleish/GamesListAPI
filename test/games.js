@@ -10,24 +10,26 @@ let server = app.server;
 
 chai.use(chaiHttp);
 
-describe('Games', function() {
+describe('Games', function () {
     this.timeout(5000);
 
-    before(function() {
-
+    before((done) => {
+        done();
     });
 
-    after(function() {
-
+    after((done) => {
+        done();
     });
-    
-    it('should GET all the games', function(done) {
-        chai.request(server)
-            .get('/games')
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.be.a('array');
-            done();
+
+    describe('/GET games', () => {
+        it('should GET all games', (done) => {
+            chai.request(server)
+                .get('/games')
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('array');
+                    done();
+                });
         });
     });
 });

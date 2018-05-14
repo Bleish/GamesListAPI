@@ -6,7 +6,7 @@ import games from './games';
 
 router.use('/games', games);
 
-router.get('/', function(req, res){
+router.get('/', (req, res) => {
     res.send('GET route on index.');
 });
 

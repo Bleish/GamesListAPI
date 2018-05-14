@@ -40,4 +40,6 @@ app.use(routes); // ES6 method
 
 let server = app.listen(port);
 
-export { server }; // For mocha testing
+export {
+    server
+}; // For mocha testing
