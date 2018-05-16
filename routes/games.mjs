@@ -44,4 +44,25 @@ router.post('/', (req, res) => {
         });
 });
 
+router.put('/:id', (req, res) => {
+    Game.findByIdAndUpdate(req.params.id, req.body, {
+            new: true
+        },
+        (err, game) => {
+            if (err) {
+                return res.status(500).send("There was a problem updating the game.");
+            }
+            res.status(200).send(game);
+        });
+});
+
+router.delete('/:id', (req, res) => {
+    Game.findByIdAndRemove(req.params.id, (err, game) => {
+        if (err) {
+            return res.status(500).send("There was a problem deleting the game.");
+        }
+        res.status(200).send("Game " + game.name + " was deleted.");
+    });
+});
+
 export default router;
