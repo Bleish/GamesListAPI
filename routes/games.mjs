@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
         }
         res.json(games);
     });
-    // Alternate code
+
+    // Alternate query code
     // let query = Game.find({});
     // query.exec((err, games) => {
     //     if (err) res.send(err);
@@ -21,10 +22,10 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     Game.findById(req.params.id, (err, game) => {
         if (err) {
-            return res.status(500).send("There was a problem finding the game.");
+            return res.status(500).send('There was a problem finding the game.');
         }
         if (!game) {
-            return res.status(404).send("No game found.");
+            return res.status(404).send('No game found.');
         }
         res.status(200).send(game);
     });
@@ -38,7 +39,7 @@ router.post('/', (req, res) => {
         },
         (err, game) => {
             if (err) {
-                return res.status(500).send("There was a problem adding the game to the database.");
+                return res.status(500).send('There was a problem adding the game to the database.');
             }
             res.status(200).send(game);
         });
@@ -50,7 +51,7 @@ router.put('/:id', (req, res) => {
         },
         (err, game) => {
             if (err) {
-                return res.status(500).send("There was a problem updating the game.");
+                return res.status(500).send('There was a problem updating the game.');
             }
             res.status(200).send(game);
         });
@@ -59,9 +60,9 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     Game.findByIdAndRemove(req.params.id, (err, game) => {
         if (err) {
-            return res.status(500).send("There was a problem deleting the game.");
+            return res.status(500).send('There was a problem deleting the game.');
         }
-        res.status(200).send("Game " + game.name + " was deleted.");
+        res.status(200).send('Game ' + game.name + ' was deleted.');
     });
 });
 

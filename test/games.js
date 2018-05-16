@@ -3,7 +3,8 @@ require = require('esm')(module);
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let app = require('../app.mjs');
+let app = require('../app');
+let Game = require('mongoose').model('Game');
 
 let should = chai.should();
 let server = app.server;
@@ -14,11 +15,42 @@ describe('Games', function () {
     this.timeout(5000);
 
     before((done) => {
-        done();
+        Game.create({
+            name: 'TestGame1',
+            system: 'TestSystem',
+            releaseDate: 2001
+        }, {
+            name: 'TestGame2',
+            system: 'TestSystem',
+            releaseDate: 2002
+        }, {
+            name: 'TestGame3',
+            system: 'TestSystem',
+            releaseDate: 2003
+        }, (err) => {
+            if (err) {
+                console.error(err);
+            }
+            done();
+        });
     });
 
     after((done) => {
-        done();
+        Game.deleteMany({
+            system: 'TestSystem'
+        }, (err) => {
+            if (err) {
+                console.error(err);
+            }
+            done();
+        });
+        // For when the test database is set up
+        // Game.deleteMany((err) => {
+        //     if (err) {
+        //         console.error(err);
+        //     }
+        //     done();
+        // });
     });
 
     describe('/GET games', () => {
