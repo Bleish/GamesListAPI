@@ -1,8 +1,7 @@
 import express from 'express';
-let router = express.Router();
-
 import games from './games';
-// let games = require('./games').default;
+
+let router = express.Router();
 
 router.use('/games', games);
 
@@ -11,4 +10,3 @@ router.get('/', (req, res) => {
 });
 
 export default router;
-// module.exports = router;

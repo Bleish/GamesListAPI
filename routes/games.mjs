@@ -1,6 +1,7 @@
 import express from 'express';
-let router = express.Router();
 import Game from '../models/game';
+
+let router = express.Router();
 
 router.get('/', (req, res) => {
     Game.find((err, games) => {
@@ -9,14 +10,6 @@ router.get('/', (req, res) => {
         }
         res.json(games);
     });
-
-    // Alternate query code
-    // let query = Game.find({});
-    // query.exec((err, games) => {
-    //     if (err) res.send(err);
-    //     res.json(games);
-    //     console.log(games);
-    // });
 });
 
 router.get('/:id', (req, res) => {
