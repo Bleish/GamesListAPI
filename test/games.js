@@ -16,7 +16,7 @@ describe('Games', function () {
     this.timeout(5000);
 
     before((done) => {
-        Game.create(data.GAME1, data.GAME2, data.GAME3, (err) => {
+        Game.create(...data.testGames, data.testGameSingle, (err) => {
             if (err) {
                 console.error(err);
             }
@@ -33,6 +33,7 @@ describe('Games', function () {
             }
             done();
         });
+        done();
     });
 
     describe('/GET games', () => {
@@ -43,6 +44,58 @@ describe('Games', function () {
                     res.should.have.status(200);
                     res.body.should.be.a('array');
                     res.body[0].should.include.property('system', data.SYSTEM);
+                    done();
+                });
+        });
+    });
+    
+    describe('/GET game', () => {
+        it('should GET one game', (done) => {
+            chai.request(server)
+                .get(`/games/${data.testGameSingle._id}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.include.property('_id', data.testGameSingle._id.toString());
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request)', (done) => {
+            chai.request(server)
+                .get(`/games/badId`)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+        it('should return 404 (Not Found)', (done) => {
+            chai.request(server)
+                .get(`/games/${data.badId}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+    });
+
+    describe('/POST game', () => {
+        it('should POST one game', (done) => {
+            chai.request(server)
+                .post('/games')
+                .send(data.postGameSingle)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.include.property('title', data.postGameSingle.title);
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request)', (done) => {
+            chai.request(server)
+                .post('/games')
+                .send({})
+                .end((err, res) => {
+                    res.should.have.status(400);
                     done();
                 });
         });

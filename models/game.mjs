@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 let Schema = mongoose.Schema;
 
 let gameSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true
     },

@@ -2,10 +2,15 @@
 import express from 'express';
 import config from 'config';
 import mongoose from 'mongoose';
+import bodyParser from 'body-parser';
 import routes from './routes';
 
 // Create Express application
 let app = express();
+
+// Set up body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up Mongoose/Mongo connection
 let dbConnectionString = `mongodb://${config.db.host}/${config.db.name}`;

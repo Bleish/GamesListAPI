@@ -1,17 +1,27 @@
+import mongoose from 'mongoose';
+
 export const SYSTEM = 'TestSystem';
 
-export const GAME1 = {
-    name: 'TestGame1',
+export let badId = mongoose.Types.ObjectId();
+export let testGames = [];
+
+for (let i = 1; i < 4; i++) {
+    testGames.push({
+        title: `TestGame${i}`,
+        system: SYSTEM,
+        releaseDate: 2000 + i
+    });
+}
+
+export let testGameSingle = {
+    _id: mongoose.Types.ObjectId(),
+    title: 'TestGameSingle',
     system: SYSTEM,
-    releaseDate: 2001
-};
-export const GAME2 = {
-    name: 'TestGame2',
+    releaseDate: 2000
+}
+
+export let postGameSingle = {
+    title: 'PostGameSingle',
     system: SYSTEM,
-    releaseDate: 2002
-};
-export const GAME3 = {
-    name: 'TestGame3',
-    system: SYSTEM,
-    releaseDate: 2003
+    releaseDate: 1999
 };
