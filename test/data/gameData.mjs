@@ -18,10 +18,27 @@ export let testGameSingle = {
     title: 'TestGameSingle',
     system: SYSTEM,
     releaseDate: 2000
-}
+};
+
+export let testGameSingleInvalid = {
+    title: 'TestGameSingle',
+    system: SYSTEM,
+    releaseDate: "InvalidYearFormat"
+};
 
 export let postGameSingle = {
     title: 'PostGameSingle',
     system: SYSTEM,
     releaseDate: 1999
+};
+
+export let putGameSingle = {
+    title: 'PutGameSingle'
+};
+
+export let deleteGameSingle = {
+    _id: mongoose.Types.ObjectId(),
+    title: 'DeleteGameSingle',
+    system: SYSTEM,
+    releaseDate: 1998
 };

@@ -54,7 +54,15 @@ router.put('/:id', (req, res) => {
         },
         (err, game) => {
             if (err) {
-                return res.status(500).send('There was a problem updating the game.'); // TODO: Replace with RESTful status codes
+                if (err.name === 'CastError' || err.name === 'ValidationError') {
+                    res.status(400);
+                } else {
+                    res.status(500);
+                }
+                return res.send(err);
+            }
+            if (!game) {
+                return res.status(404).send('No game found.');
             }
             res.status(200).send(game);
         });
@@ -63,7 +71,15 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     Game.findByIdAndRemove(req.params.id, (err, game) => {
         if (err) {
-            return res.status(500).send('There was a problem deleting the game.'); // TODO: Replace with RESTful status codes
+            if (err.name === 'CastError') {
+                res.status(400);
+            } else {
+                res.status(500);
+            }
+            return res.send(err);
+        }
+        if (!game) {
+            return res.status(404).send('No game found.');
         }
         res.status(200).send('Game ' + game.title + ' was deleted.');
     });

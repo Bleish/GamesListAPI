@@ -16,7 +16,7 @@ describe('Games', function () {
     this.timeout(5000);
 
     before((done) => {
-        Game.create(...data.testGames, data.testGameSingle, (err) => {
+        Game.create(...data.testGames, data.testGameSingle, data.deleteGameSingle, (err) => {
             if (err) {
                 console.error(err);
             }
@@ -37,7 +37,7 @@ describe('Games', function () {
     });
 
     describe('/GET games', () => {
-        it('should GET all games', (done) => {
+        it('should return 200 (OK)', (done) => {
             chai.request(server)
                 .get('/games')
                 .end((err, res) => {
@@ -50,7 +50,7 @@ describe('Games', function () {
     });
     
     describe('/GET game', () => {
-        it('should GET one game', (done) => {
+        it('should return 200 (OK)', (done) => {
             chai.request(server)
                 .get(`/games/${data.testGameSingle._id}`)
                 .end((err, res) => {
@@ -60,7 +60,7 @@ describe('Games', function () {
                     done();
                 });
         });
-        it('should return 400 (Bad Request)', (done) => {
+        it('should return 400 (Bad Request) when id is invalid', (done) => {
             chai.request(server)
                 .get(`/games/badId`)
                 .end((err, res) => {
@@ -68,7 +68,7 @@ describe('Games', function () {
                     done();
                 });
         });
-        it('should return 404 (Not Found)', (done) => {
+        it('should return 404 (Not Found) when game does not exist', (done) => {
             chai.request(server)
                 .get(`/games/${data.badId}`)
                 .end((err, res) => {
@@ -79,7 +79,7 @@ describe('Games', function () {
     });
 
     describe('/POST game', () => {
-        it('should POST one game', (done) => {
+        it('should return 200 (OK)', (done) => {
             chai.request(server)
                 .post('/games')
                 .send(data.postGameSingle)
@@ -90,12 +90,72 @@ describe('Games', function () {
                     done();
                 });
         });
-        it('should return 400 (Bad Request)', (done) => {
+        it('should return 400 (Bad Request) when missing mandatory fields', (done) => {
             chai.request(server)
                 .post('/games')
                 .send({})
                 .end((err, res) => {
                     res.should.have.status(400);
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request) when format is invalid', (done) => {
+            chai.request(server)
+                .post('/games')
+                .send(data.testGameSingleInvalid)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+    });
+
+    describe('/PUT game', () => {
+        it('should return 200 (OK)', (done) => {
+            chai.request(server)
+                .put(`/games/${data.testGameSingle._id}`)
+                .send(data.putGameSingle)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.body.should.be.a('object');
+                    res.body.should.include.property('title', data.putGameSingle.title);
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request) when id is invalid', (done) => {
+            chai.request(server)
+                .put(`/games/badId`)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request) when format is invalid', (done) => {
+            chai.request(server)
+                .put(`/games/${data.testGameSingle._id}`)
+                .send(data.testGameSingleInvalid)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+        it('should return 404 (Not Found) when game does not exist', (done) => {
+            chai.request(server)
+                .put(`/games/${data.badId}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
+                    done();
+                });
+        });
+    });
+
+    describe('/DELETE game', () => {
+        it('should return 200 (OK)', (done) => {
+            chai.request(server)
+                .delete(`/games/${data.deleteGameSingle._id}`)
+                .end((err, res) => {
+                    res.should.have.status(200);
+                    res.text.should.equal('Game ' + data.deleteGameSingle.title + ' was deleted.');
                     done();
                 });
         });
