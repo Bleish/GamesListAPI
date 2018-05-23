@@ -16,7 +16,7 @@ describe('Games', function () {
     this.timeout(5000);
 
     before((done) => {
-        Game.create(...data.testGames, data.testGameSingle, data.deleteGameSingle, (err) => {
+        Game.create(data.testGameSingle, data.deleteGameSingle, (err) => {
             if (err) {
                 console.error(err);
             }
@@ -156,6 +156,22 @@ describe('Games', function () {
                 .end((err, res) => {
                     res.should.have.status(200);
                     res.text.should.equal('Game ' + data.deleteGameSingle.title + ' was deleted.');
+                    done();
+                });
+        });
+        it('should return 400 (Bad Request) when id is invalid', (done) => {
+            chai.request(server)
+                .delete(`/games/badId`)
+                .end((err, res) => {
+                    res.should.have.status(400);
+                    done();
+                });
+        });
+        it('should return 404 (Not Found) when game does not exist', (done) => {
+            chai.request(server)
+                .delete(`/games/${data.badId}`)
+                .end((err, res) => {
+                    res.should.have.status(404);
                     done();
                 });
         });

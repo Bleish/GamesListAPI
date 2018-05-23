@@ -19,6 +19,7 @@ mongoose.Promise = global.Promise;
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:')); // Bind connection to error event
 
+// Set up routes
 app.use(routes);
 
 // For Mocha testing
