@@ -81,7 +81,7 @@ router.delete('/:id', (req, res) => {
         if (!game) {
             return res.status(404).send('No game found.');
         }
-        res.status(200).send('Game ' + game.title + ' was deleted.');
+        res.status(200).send(`Game, ${data.deleteGameSingle.title}, was deleted.`);
     });
 });
 

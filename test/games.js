@@ -155,7 +155,7 @@ describe('Games', function () {
                 .delete(`/games/${data.deleteGameSingle._id}`)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.text.should.equal('Game ' + data.deleteGameSingle.title + ' was deleted.');
+                    res.text.should.equal(`Game, ${data.deleteGameSingle.title}, was deleted.`);
                     done();
                 });
         });
